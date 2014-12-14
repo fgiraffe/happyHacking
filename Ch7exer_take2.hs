@@ -32,14 +32,18 @@ my_dropWhile fn (x:xs)   | fn x      = my_dropWhile fn xs
                         | otherwise = x : xs
 
 
--- implement map and filter using foldr
--- my_map :: (a -> b) -> [a] -> [b]
--- my_map f = foldr f []
+-- had to look up answers here but I was getting stuck on syntax,
+-- my idea of what to do was OK. :-/
 
---
---
+-- implement map f and filter p using foldr
+my_map :: (a -> b) -> [a] -> [b]
+my_map f = foldr (\x xs -> f x : xs) []
+
+my_filter :: (a -> Bool) -> [a] -> [a]
+my_filter p = foldr (\x xs -> if p x then x : xs else xs) []
+
+
+
 -- main :: IO ()
 -- main = do
---     exer1
---     exer2
 --     putStrLn "\nEnd of tests."
