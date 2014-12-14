@@ -51,7 +51,31 @@ dec2int = foldl(\x y -> 10 * x + y) 0
 
 
 
+-- ex 5: curry and uncurry
 
+add_pairs :: (Int, Int) -> Int
+add_pairs (x, y) = x + y
+
+add_curried :: Int -> Int -> Int
+add_curried x y = x + y
+
+my_curry :: ((a, b) -> c) -> a -> b -> c
+my_curry f = \x y -> f(x, y)
+
+my_uncurry :: (a -> b -> c) -> (a, b) -> c
+my_uncurry f = \(x, y) -> f x y
+
+--
+--
 -- main :: IO ()
 -- main = do
+--
+--    -- let fooUnCurryAns = (my_uncurry (my_curry (add_pairs 5 10)))
+--
+--
+--     putStrLn (show pairsAns)
+--     putStrLn (show curryAns)
+--     putStrLn (show synthPairsAddAns)
+--     putStrLn (show synthCurryAddAns)
+--
 --     putStrLn "\nEnd of tests."

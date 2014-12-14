@@ -166,6 +166,31 @@ exer4_tests =
         putStrLn "My Ch7exer_take2 Exercise 4 Tests complete."
     
     
+exer5_tests :: IO ()
+exer5_tests = let
+
+        add_synth_curried_func = my_curry add_pairs;
+        add_synth_pairs_func = my_uncurry add_curried;
+
+        ap = add_pairs(5, 10);
+        ac = add_curried 5 10;
+        
+        c_ap = add_synth_curried_func 5 10;
+        uc_ac = add_synth_pairs_func(5,10);
+
+        ct1 = TestCase $ assertEqual "add_pairs and add_curried" ap ac;
+        ct2 = TestCase $ assertEqual "curried add_pairs and uncurried add_curried" c_ap uc_ac;
+        ct3 = TestCase $ assertEqual "add_pairs and uncurried add_curried" ap uc_ac;
+        ct4 = TestCase $ assertEqual "curried add_pairs and add_curried" c_ap ac;
+        
+        my_cur_uncur_tests = TestList[TestLabel "curry/uncurry tests" ct1, ct2, ct3, ct4]
+
+    in do
+        runTestTT my_cur_uncur_tests
+        putStrLn "My Ch7exer_take2 Exercise 5 Tests complete."
+        
+    
+    
 main :: IO ()
 main = 
     do
@@ -173,6 +198,7 @@ main =
     exer2_tests
     exer3_tests
     exer4_tests
+    exer5_tests
     putStrLn "All Ch7exer_take2 Tests complete."
 
 
