@@ -151,6 +151,19 @@ exer3_tests =
         runTestTT my_filter_tests
         putStrLn "My Ch7exer_take2 Exercise 3 Tests complete."
     
+exer4_tests :: IO ()
+exer4_tests = 
+    let
+        d2i_t0 = TestCase $ assertEqual "empty input" 0 (dec2int []);
+        d2i_t1 = TestCase $ assertEqual "empty input" 12 (dec2int [1,2]);
+        d2i_t2 = TestCase $ assertEqual "empty input" 12 (dec2int [0,0,0,0,0,1,2]);
+        d2i_t3 = TestCase $ assertEqual "empty input" 30 (dec2int [0,3,0]);
+        d2i_t4 = TestCase $ assertEqual "empty input" 12345 (dec2int [1,2,3,4,5]);
+        
+        my_d2i_tests = TestList[TestLabel "dec2int tests" d2i_t0, d2i_t1, d2i_t2, d2i_t3, d2i_t4]
+    in do
+        runTestTT my_d2i_tests
+        putStrLn "My Ch7exer_take2 Exercise 4 Tests complete."
     
     
 main :: IO ()
@@ -159,6 +172,7 @@ main =
     exer1_tests
     exer2_tests
     exer3_tests
+    exer4_tests
     putStrLn "All Ch7exer_take2 Tests complete."
 
 

@@ -43,6 +43,14 @@ my_filter :: (a -> Bool) -> [a] -> [a]
 my_filter p = foldr (\x xs -> if p x then x : xs else xs) []
 
 
+-- Ex 4: dec2int using foldl
+-- eg [2,3,4,5] -> 2345
+
+dec2int :: [Int] -> Int
+dec2int = foldl(\x y -> 10 * x + y) 0
+
+
+
 
 -- main :: IO ()
 -- main = do
