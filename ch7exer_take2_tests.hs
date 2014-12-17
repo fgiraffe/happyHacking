@@ -110,7 +110,7 @@ exer2_tests = do
     
     putStrLn "My Ch7exer_take2 Exercise 2 Tests complete."
 
----
+---------------------------------------------------------------------
 exer3_tests :: IO ()
 exer3_tests =
     let 
@@ -151,6 +151,7 @@ exer3_tests =
         runTestTT my_filter_tests
         putStrLn "My Ch7exer_take2 Exercise 3 Tests complete."
     
+---------------------------------------------------------------------
 exer4_tests :: IO ()
 exer4_tests = 
     let
@@ -166,8 +167,9 @@ exer4_tests =
         putStrLn "My Ch7exer_take2 Exercise 4 Tests complete."
     
     
-exer5_tests :: IO ()
-exer5_tests = let
+---------------------------------------------------------------------
+exer6_tests :: IO ()
+exer6_tests = let
 
         add_synth_curried_func = my_curry add_pairs;
         add_synth_pairs_func = my_uncurry add_curried;
@@ -187,10 +189,24 @@ exer5_tests = let
 
     in do
         runTestTT my_cur_uncur_tests
-        putStrLn "My Ch7exer_take2 Exercise 5 Tests complete."
+        putStrLn "My Ch7exer_take2 Exercise 6 Tests complete."
         
+exer7_tests :: IO ()
+exer7_tests = let
     
+    uf_src_test = [0..15]
+    uf_src_test_tiny = [0..5]
     
+    uf_c8t1 = TestCase $ assertEqual "unfold chop 8 null list" (chop8 []) (uf_chop8 [])
+    uf_c8t2 = TestCase $ assertEqual "unfold chop 8 on 16" (chop8 uf_src_test) (uf_chop8 uf_src_test)
+    uf_c8t3 = TestCase $ assertEqual "unfold chop 8 on 16" (chop8 uf_src_test_tiny) (uf_chop8 uf_src_test_tiny)
+    
+    my_unfold_tests = TestList[TestLabel "unfold tests" uf_c8t1, uf_c8t2, uf_c8t3]
+
+    in do
+        runTestTT my_unfold_tests
+        putStrLn "My Ch7exer_take2 Exercise 7 Tests complete."
+            
 main :: IO ()
 main = 
     do
@@ -198,7 +214,8 @@ main =
     exer2_tests
     exer3_tests
     exer4_tests
-    exer5_tests
+    putStrLn "           -> There is no 5 <-"
+    exer6_tests
     putStrLn "All Ch7exer_take2 Tests complete."
 
 
