@@ -190,8 +190,8 @@ mult :: Nat -> Nat -> Nat
 -- mult m (Succ n) = add m (mult m n)
 
 -- v2 YES
--- mult m Zero = Zero
--- mult m (Succ n) = add m (mult m n)
+mult m Zero = Zero
+mult m (Succ n) = add m (mult m n)
 
 -- V 3 NOTE M N SWITCH, PEELING OFF WRONG NUM
 -- mult m Zero = Zero
@@ -225,6 +225,156 @@ exer3 = do
     
     putStrLn ("Completed Exercise 3");
 
+----------------------------------------------------------------         
+-- Ex 4 - LE EQ GT
+
+data Tree4  = Leaf4 Integer
+            | Node4 Tree4 Integer Tree4
+
+occurs :: Integer -> Tree4 -> Bool
+
+-- v 1 OK
+occurs m (Leaf4 n) = m == n
+occurs m (Node4 l n r) =
+    case compare m n of
+        LT -> occurs m l
+        EQ -> True
+        GT -> occurs m r
+            
+-- v 2 trivially wrong            
+            
+-- v 3 does not type check on compare
+-- occurs m (Leaf n) = compare m n
+-- occurs m (Node l n r) =
+--     case compare m n of
+--         LT -> occurs m l
+--         EQ -> True
+--         GT -> occurs m r
+
+-- v 4 no EQ case wrong
+-- occurs m (Leaf n) = m == n
+-- occurs m (Node l n r) =
+--     case compare m n of
+--         LT -> occurs m l
+--         EQ -> False
+--         GT -> occurs m r
+
+-- v 5 YES
+-- occurs m (Leaf n) = m == n
+-- occurs m (Node l n r)
+--     | m == n = True
+--     | m < n = occurs m l
+--     | otherwise = occurs m r
+
+-- v 6 trivially wrong
+
+-- v 7 - wont type check
+-- occurs m n = m == n
+-- occurs m (Node l n r)
+--     | m == n = True
+--     | m < n = occurs m l
+--     | otherwise = occurs m r
+
+-- v 8 - also wont type check
+            
+            
+exer4 :: IO ()
+exer4 = do
+    
+    let tree134 = Node4 (Leaf4 1) 3 (Leaf4 4)
+    let bigTree = Node4 (Node4 (Leaf4 1) 3 (Leaf4 4))
+                        5
+                        (Node4 (Leaf4 6) 7 (Leaf4 9))
+    
+    putStrLn ("0 in 134: " ++ (show (occurs 0 tree134)));
+    putStrLn ("1 in 134: " ++ (show (occurs 1 tree134)));
+    putStrLn ("2 in 134: " ++ (show (occurs 2 tree134)));
+    putStrLn ("3 in 134: " ++ (show (occurs 3 tree134)));
+    putStrLn ("4 in 134: " ++ (show (occurs 4 tree134)));
+
+    putStrLn ("");
+
+    putStrLn ("0 in big tree: " ++ (show (occurs 0 bigTree)));
+    putStrLn ("1 in big tree: " ++ (show (occurs 1 bigTree)));
+    putStrLn ("2 in big tree: " ++ (show (occurs 2 bigTree)));
+    putStrLn ("3 in big tree: " ++ (show (occurs 3 bigTree)));
+    putStrLn ("4 in big tree: " ++ (show (occurs 4 bigTree)));
+    putStrLn ("5 in big tree: " ++ (show (occurs 5 bigTree)));
+    putStrLn ("6 in big tree: " ++ (show (occurs 6 bigTree)));
+    putStrLn ("7 in big tree: " ++ (show (occurs 7 bigTree)));
+    putStrLn ("8 in big tree: " ++ (show (occurs 8 bigTree)));
+    putStrLn ("9 in big tree: " ++ (show (occurs 9 bigTree)));
+    putStrLn ("100 in big tree: " ++ (show (occurs 100 bigTree)));
+
+    putStrLn ("Completed Exercise 4");
+
+----------------------------------------------------------------         
+----------------------------------------------------------------         
+-- Ex 5 - balanced, values only at leaves
+
+-- values only at leaves
+data Tree  = Leaf Integer
+            | Node Tree Tree
+            deriving Show
+
+balanced :: Tree -> Bool
+
+-- v 1, trivially wrong on leaves
+-- v 2, again wrong on leaves returns Bool
+-- v 3, just like 2?
+-- v4
+
+leaves (Leaf _) = 1
+leaves (Node l r) = leaves l + leaves r
+
+balanced (Leaf _) = True
+balanced (Node l r) = abs(leaves l - leaves r) <= 1 && balanced l && balanced r
+
+----------------------------------------------------------------         
+exer5 :: IO ()
+exer5 = do
+    
+    let bt1 = (Leaf 1)
+    let bt2 = Node (Leaf 1) (Leaf 2)
+    let ubt1 = Node (Node (Node (Node (Leaf 1) (Leaf 2)) (Leaf 4)) (Leaf 5)) (Leaf 99)
+    
+        
+    putStrLn ("bt1 balanced?:  " ++ (show (balanced bt1)));
+    putStrLn ("bt2 balanced?:  " ++ (show (balanced bt2)));
+    putStrLn ("ubt1 balanced?:  " ++ (show (balanced ubt1)));
+ 
+    putStrLn ("End of Exercise 5.\n");
+
+----------------------------------------------------------------         
+-- Ex 6 - balance
+
+balance :: [Integer] -> Tree
+
+halve xs = splitAt (length xs `div` 2) xs
+
+balance [x] = Leaf x
+balance xs = Node (balance ys) (balance zs)
+    where (ys, zs) = halve xs
+
+
+exer6 :: IO ()
+exer6 = do
+    
+    let single = [1]
+    let two = [1,2]
+    let three = [1..3]
+    
+    let bigBT = (balance [1..10])
+    
+    putStrLn ("[1]  " ++ (show (balance single)));
+    putStrLn ("[1,2]  " ++ (show (balance two)));
+    putStrLn ("[1,2,3]  " ++ (show (balance three)));
+    putStrLn ("[1,2,3,4]  " ++ (show (balance [1..4])));
+    putStrLn ("[1..10]  " ++ (show bigBT));
+    
+    putStrLn ("\nbigBT balanced?:  " ++ (show (balanced bigBT)));
+    
+    putStrLn ("End of Exercise 6.\n");
 
 ----------------------------------------------------------------         
 
@@ -233,7 +383,10 @@ main = do
     -- exer0
     -- exer1
     -- exer2
-    exer3
+    -- exer3
+    -- exer4
+    -- exer5
+    exer6
     
     putStrLn ("End of Homework 9.");
     

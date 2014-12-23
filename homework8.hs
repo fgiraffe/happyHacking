@@ -9,5 +9,5 @@ putStr' (x : xs) = putChar x >> putStr' xs
 main :: IO ()
 main = do
 
-    putStr' "ooo baby baby"
+    putStr' "ooo baby baby\n"
     putStrLn ( "Complete." )
