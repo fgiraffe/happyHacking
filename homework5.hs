@@ -80,5 +80,6 @@ main :: IO ()
 main = do
 
     putStrLn (show (riffle [1,2,3] [4,5,6]))
+    putStrLn ("Done")
 
 
