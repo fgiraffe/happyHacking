@@ -3,7 +3,7 @@
 -- sum [x ^ 2 | x <- [1 .. 5]]
 
 -- replicate_fg n a = [a | _ <- [1 .. n]]
-
+-- just testing 
 -- let foo = replicate_fg 5 "yo"
 
 -- Q4
